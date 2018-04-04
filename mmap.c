@@ -7,7 +7,7 @@
 int main() {
   int fd = open("mmap.c", O_RDONLY);
   int len = lseek(fd, 0, SEEK_END)+1;
-  lseek(fd, 0, SEEK_SET);
+  //lseek(fd, 0, SEEK_SET);
   printf("len: %d\n", len);
   char *txt = (char*)mmap(NULL, len, PROT_READ, MAP_PRIVATE, fd, 0);
   char *p;
