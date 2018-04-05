@@ -1,8 +1,10 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 #include <sys/stat.h>
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
-#include <tcclib.h>
 
 void test(char *fn) {
   int fd = open(fn, O_RDONLY);
@@ -19,4 +21,12 @@ void test(char *fn) {
 int main() {
   test("mmap.c");
   test("train-labels.idx1-ubyte");
+
+  int fd = open("foo", O_RDWR);
+  int len = lseek(fd, 0, SEEK_END)+1;
+  char *raw = (char*)mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+  srand(time(0));
+  sprintf(raw, "Magic: %d\n", rand());
+  munmap(raw, len);
+  close(fd);
 }
