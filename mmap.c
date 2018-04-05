@@ -29,4 +29,12 @@ int main() {
   sprintf(raw, "Magic: %d\n", rand());
   munmap(raw, len);
   close(fd);
+
+  fd = open("bar", O_RDWR);
+  len = lseek(fd, 0, SEEK_END)+1;
+  raw = (char*)mmap(NULL, len, PROT_READ|PROT_WRITE, MAP_PRIVATE, fd, 0);
+  srand(time(0));
+  sprintf(raw, "Magic: %d\n", rand());
+  munmap(raw, len);
+  close(fd);
 }
