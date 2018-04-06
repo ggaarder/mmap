@@ -37,4 +37,6 @@ int main() {
   sprintf(raw, "Magic: %d\n", rand());
   munmap(raw, len);
   close(fd);
+
+  munmap(NULL, 12345);
 }
